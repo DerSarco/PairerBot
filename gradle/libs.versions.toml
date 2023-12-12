@@ -1,0 +1,13 @@
+[versions]
+kotlin = "KOTLIN_VERSION"  # Kotlin version must be updated in build.gradle.kts too
+
+kord-extensions = "1.7.1-SNAPSHOT"
+slf4j = "2.0.9"
+kord = "0.12.0"
+
+[libraries]
+kord = { module = "dev.kord:kord-core", version.ref = "kord" }
+kord-extensions = { module = "com.kotlindiscord.kord.extensions:kord-extensions", version.ref = "kord-extensions" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
+
+slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
