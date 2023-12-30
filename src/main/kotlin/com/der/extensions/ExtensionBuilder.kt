@@ -1,21 +1,16 @@
 package com.der.extensions
 
-import com.der.data.MatchData
 import com.der.extensions.pairing.MatchExtension
 import com.der.extensions.pairing.PairExtension
-import dev.kord.core.event.message.ReactionAddEvent
+import dev.kord.core.entity.ReactionEmoji
 
 class BotExtensionBuilder {
 
-    private var matchData: MatchData = MatchData(mutableListOf())
-
-    private val liveMessage: (ReactionAddEvent) -> Unit = { reactionAddEvent ->
-        matchData.list.add(reactionAddEvent)
-        println("livemessage function")
-        println(matchData.list)
+    object EMOJI {
+        val emoji = ReactionEmoji.Unicode("✅")
     }
 
-    val matchExtension = MatchExtension(matchData)
-    val pairExtension = PairExtension(liveMessage)
+    val matchExtension = MatchExtension()
+    val pairExtension = PairExtension()
 
 }
