@@ -16,7 +16,7 @@ class MatchMockExtension() : Extension() {
         publicSlashCommand {
             name = "matchMock"
             description = "Empareja a la gente"
-            val matchData = mutableListOf("CARLOS", "MIGUEL", "JOSELITO", "PEDRO", "JULIAN", "ESTEBAN")
+            val matchData = mutableListOf("CARLOS", "MIGUEL", "JOSELITO", "PEDRO", "JULIAN", "ESTEBAN", "ANA")
             action {
                 sendMessageWithPairs(matchData, this)
                 edit {
@@ -41,7 +41,7 @@ class MatchMockExtension() : Extension() {
 
     private fun pairFunction(data: MutableList<String>): StringBuilder {
         val discordMessage = StringBuilder()
-        discordMessage.append("Los emparejamientos de esta sesión son los siguientes: \n")
+        discordMessage.append("# Los emparejamientos de esta sesión son los siguientes: \n")
         when (data.size) {
             2 -> discordMessage.append("${data.first()} - ${data.last()}")
             3 -> discordMessage.append("${data.first()} -${data[1]} -  ${data.last()}")
