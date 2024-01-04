@@ -13,6 +13,7 @@ suspend fun main() {
         extensions {
             add(extensionBuilder::pairExtension)
             add(extensionBuilder::matchExtension)
+            add(extensionBuilder::matchMockExtension)
         }
     }
 
