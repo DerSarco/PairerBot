@@ -16,12 +16,16 @@ class MatchMockExtension() : Extension() {
         publicSlashCommand {
             name = "matchMock"
             description = "Empareja a la gente"
-            val matchData = mutableListOf("CARLOS", "MIGUEL", "JOSELITO", "PEDRO", "JULIAN", "ESTEBAN"  )
+            val matchData = mutableListOf("CARLOS", "MIGUEL", "JOSELITO", "PEDRO", "JULIAN", "ESTEBAN")
             action {
                 sendMessageWithPairs(matchData, this)
+                edit {
+                    content = "✅"
+                }
             }
         }
     }
+
 
     private suspend fun sendMessageWithPairs(
         data: MutableList<String>,

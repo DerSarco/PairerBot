@@ -31,6 +31,9 @@ class MatchExtension() : Extension() {
                 if (matchData.isNotEmpty()) {
                     sendMessageWithPairs(matchData, this)
                 }
+                edit {
+                    content = "✅"
+                }
             }
         }
     }

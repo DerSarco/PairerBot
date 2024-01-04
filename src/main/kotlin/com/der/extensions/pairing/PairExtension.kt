@@ -15,6 +15,9 @@ class PairExtension() : Extension() {
             action {
                 this.channel.createMessage("${channel.mention} reacciona a este mensaje si deseas participar").also {
                     it.addReaction(BotExtensionBuilder.EMOJI.emoji)
+                    edit {
+                        content = "✅"
+                    }
                 }
             }
         }
