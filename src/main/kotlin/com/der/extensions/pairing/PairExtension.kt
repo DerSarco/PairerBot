@@ -1,6 +1,6 @@
 package com.der.extensions.pairing
 
-import com.der.extensions.BotExtensionBuilder
+import BotExtensionBuilder
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 
@@ -10,8 +10,8 @@ class PairExtension() : Extension() {
 
     override suspend fun setup() {
         publicSlashCommand {
-            name = "pair"
-            description = "Pair people to make networking or pair programming!"
+            name = "empezar"
+            description = "Empareja a las personas para que esto funcione!"
             action {
                 this.channel.createMessage("${channel.mention} reacciona a este mensaje si deseas participar").also {
                     it.addReaction(BotExtensionBuilder.EMOJI.emoji)

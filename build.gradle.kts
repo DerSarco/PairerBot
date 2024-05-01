@@ -2,11 +2,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.22"
+    java
+    war
 }
 
 group = "com.der.bot"
-version = "1.0-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -25,9 +27,14 @@ repositories {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kord)
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation(libs.kord.extensions)
     implementation(libs.slf4j)
     testImplementation(kotlin("test"))
+}
+
+war  {
+    this.webAppDirName = "PairerBot"
 }
 
 application {

@@ -1,6 +1,6 @@
 package com.der.bot
 
-import com.der.extensions.BotExtensionBuilder
+import BotExtensionBuilder
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.annotation.KordPreview
@@ -13,7 +13,6 @@ suspend fun main() {
         extensions {
             add(extensionBuilder::pairExtension)
             add(extensionBuilder::matchExtension)
-            add(extensionBuilder::matchMockExtension)
         }
     }
 

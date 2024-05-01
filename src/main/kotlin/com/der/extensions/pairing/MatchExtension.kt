@@ -1,32 +1,50 @@
 package com.der.extensions.pairing
 
-import com.der.extensions.BotExtensionBuilder
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.application.slash.PublicSlashCommandContext
 import com.kotlindiscord.kord.extensions.components.forms.ModalForm
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
+import dev.kord.common.entity.AuditLogChangeKey
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 import kotlin.random.asKotlinRandom
 
 class MatchExtension() : Extension() {
     override val name: String = "match"
 
+    object AvailableRoles {
+        val ENABLED_ROLES = mutableListOf("ADMIN", "administrador", "admin", "Admin")
+    }
+
     override suspend fun setup() {
         publicSlashCommand {
-            name = "match"
-            description = "Empareja a la gente "
+            name = "emparejar"
+            description = "Junta a la gente!"
             val matchData = mutableListOf<User>()
+            val messages = mutableListOf<Message>()
             action {
                 channel.messages.collect { message ->
-                    if (message.author?.isBot == true) {
-                        message.getReactors(BotExtensionBuilder.EMOJI.emoji).collect { user ->
-                            if (!user.isBot) {
-                                matchData.add(user)
-                            }
-                        }
+                    messages.add(message)
+                }
+                val message = messages.last()
+                message.getReactors(BotExtensionBuilder.EMOJI.emoji).collect {
+                    if (it.isBot) {
+                        matchData.add(it)
                     }
+                }
+                val userRoles = mutableListOf<String>()
+
+                val user = this.member?.asUser()?.asMember(this.guild!!.id)
+                user?.roles?.collect {
+                    userRoles.add(it.name)
+                }
+                if (findEnabledRoles(userRoles) || user?.isOwner() == true) {
+                    sendMessageWithPairs(matchData, this)
+                } else {
+                    this.channel.createMessage("No tienes permisos para ejecutar este comando shoro :(")
                 }
                 if (matchData.isNotEmpty()) {
                     sendMessageWithPairs(matchData, this)
@@ -36,6 +54,16 @@ class MatchExtension() : Extension() {
                 }
             }
         }
+    }
+
+    private fun findEnabledRoles(roles: MutableList<String>): Boolean {
+        var exist = false
+        for (role in AvailableRoles.ENABLED_ROLES) {
+            exist = roles.contains(role)
+            if (exist)
+                break
+        }
+        return exist
     }
 
     private suspend fun sendMessageWithPairs(
@@ -75,5 +103,4 @@ class MatchExtension() : Extension() {
 
         return discordMessage
     }
-
 }
