@@ -24,24 +24,24 @@ class MatchExtension() : Extension() {
             val messages = mutableListOf<Message>()
             action {
                 channel.messages.collect { message ->
-                    messages.add(message)
-                }
-
-                val message = messages.find {
-                    it.author?.isBot == true
-                }
-                message?.let {
-                    it.getReactors(BotExtensionBuilder.EMOJI.emoji).collect {user ->
-                        if (!user.isBot) {
-                            matchData.add(user)
-                        }
+                    if (message.author?.isBot == true) {
+                        messages.add(message)
                     }
                 }
-                val userRoles = getUserRoles()
 
-                if (findEnabledRoles(userRoles)) {
+                if (messages.size == 0) {
+                    return@action
+                }
+                messages.last().getReactors(BotExtensionBuilder.EMOJI.emoji).collect { user ->
+                    if (!user.isBot) {
+                        matchData.add(user)
+                    }
+                }
+
+                if (findEnabledRoles(getUserRoles())) {
                     if (matchData.isNotEmpty()) {
                         sendMessageWithPairs(matchData, this)
+                        messages.last().delete()
                     }
                     edit {
                         content = "✅"
