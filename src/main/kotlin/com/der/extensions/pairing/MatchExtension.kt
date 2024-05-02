@@ -10,7 +10,6 @@ import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
-import kotlinx.serialization.json.internal.decodeToSequenceByReader
 import java.util.*
 import kotlin.random.asKotlinRandom
 
