@@ -32,7 +32,7 @@ class MatchExtension() : Extension() {
                 }
                 message?.let {
                     it.getReactors(BotExtensionBuilder.EMOJI.emoji).collect {user ->
-                        if (user.isBot) {
+                        if (!user.isBot) {
                             matchData.add(user)
                         }
                     }
