@@ -10,6 +10,7 @@ import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
+import kotlinx.serialization.json.internal.decodeToSequenceByReader
 import java.util.*
 import kotlin.random.asKotlinRandom
 
@@ -26,10 +27,15 @@ class MatchExtension() : Extension() {
                 channel.messages.collect { message ->
                     messages.add(message)
                 }
-                val message = messages.last()
-                message.getReactors(BotExtensionBuilder.EMOJI.emoji).collect {
-                    if (it.isBot) {
-                        matchData.add(it)
+
+                val message = messages.find {
+                    it.author?.isBot == true
+                }
+                message?.let {
+                    it.getReactors(BotExtensionBuilder.EMOJI.emoji).collect {user ->
+                        if (user.isBot) {
+                            matchData.add(user)
+                        }
                     }
                 }
                 val userRoles = getUserRoles()
