@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     kotlin("jvm") version "1.9.22"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     java
-    war
 }
 
 group = "com.der.bot"
@@ -27,18 +27,28 @@ repositories {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kord)
-    implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation(libs.kord.extensions)
     implementation(libs.slf4j)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     testImplementation(kotlin("test"))
 }
 
-war  {
-    this.webAppDirName = "PairerBot"
+application {
+    mainClass.set("com.der.bot.AppKt")
 }
 
-application {
-    mainClass.set("com.example.bot.AppKt")
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = application.mainClass.get()
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+tasks.shadowJar {
+    archiveClassifier.set("")
+    manifest {
+        attributes["Main-Class"] = application.mainClass.get()
+    }
 }
 
 tasks.test {
