@@ -7,6 +7,7 @@ plugins {
     java
 }
 
+
 group = "com.der.bot"
 version = "0.1.0"
 
@@ -56,6 +57,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "13"
 }
-

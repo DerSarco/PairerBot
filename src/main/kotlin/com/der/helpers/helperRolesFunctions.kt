@@ -1,8 +1,8 @@
 package com.der.helpers
 
-import com.kotlindiscord.kord.extensions.commands.Arguments
-import com.kotlindiscord.kord.extensions.commands.application.slash.PublicSlashCommandContext
-import com.kotlindiscord.kord.extensions.components.forms.ModalForm
+import BotExtensionBuilder
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.UserBehavior
 
 fun findEnabledRoles(roles: MutableList<String>): Boolean {
     var exist = false
@@ -15,11 +15,13 @@ fun findEnabledRoles(roles: MutableList<String>): Boolean {
 }
 
 
-suspend fun PublicSlashCommandContext<Arguments, ModalForm>.getUserRoles(): MutableList<String> {
+suspend fun getUserRoles(user: UserBehavior, guild: GuildBehavior?): MutableList<String>{
     val userRoles: MutableList<String> = mutableListOf()
-    val user = this.member?.asUser()?.asMember(this.guild!!.id)
-    user?.roles?.collect {
-        userRoles.add(it.name)
+    if (guild != null){
+        val userGiven = user.asMemberOrNull(guild.id)
+        userGiven?.roles?.collect {
+            userRoles.add(it.name)
+        }
     }
     return userRoles
 }

@@ -9,8 +9,7 @@ suspend fun main() {
 
     val kord = ExtensibleBot(env("TOKEN")) {
         extensions {
-            add(extensionBuilder::pairExtension)
-            add(extensionBuilder::matchExtension)
+            add(extensionBuilder::pairExtensionMocked)
         }
     }
 
